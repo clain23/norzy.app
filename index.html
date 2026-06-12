@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Norzy — know your night</title>
+<meta name="description" content="Norzy records your whole night, detects snoring with on-device machine learning, and tells you in the morning what actually happened — and what helps.">
+<link rel="icon" type="image/png" href="assets/icon.png">
+<link rel="apple-touch-icon" href="assets/icon.png">
+<meta property="og:title" content="Norzy — know your night">
+<meta property="og:description" content="Real ML snore detection, full-night audio you can replay, and a morning report that shows what actually helps.">
+<meta property="og:image" content="https://norzy.app/assets/icon.png">
+<meta property="og:url" content="https://norzy.app">
+<meta property="og:type" content="website">
+<style>
+  :root {
+    --bg: #0b0c16;
+    --bg2: #131527;
+    --panel: #181b33;
+    --line: #262a4d;
+    --text: #e9eaf6;
+    --muted: #9598b8;
+    --indigo: #8c8ff8;
+    --pink: #ef6a8d;
+    --teal: #5fd4c8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+    line-height: 1.6;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 0;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 20px; }
+  .brand img { width: 36px; height: 36px; border-radius: 9px; }
+  nav a { color: var(--muted); text-decoration: none; margin-left: 24px; font-size: 15px; }
+  nav a:hover { color: var(--text); }
+
+  .hero {
+    display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px;
+    align-items: center; padding: 64px 0 80px;
+  }
+  .hero h1 {
+    font-size: 56px; line-height: 1.08; letter-spacing: -0.02em;
+    background: linear-gradient(120deg, #fff 30%, var(--indigo));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero p.lead { margin: 24px 0 32px; font-size: 19px; color: var(--muted); max-width: 480px; }
+  .badges { display: flex; gap: 12px; flex-wrap: wrap; }
+  .badge {
+    padding: 10px 18px; border-radius: 999px; font-size: 14px; font-weight: 600;
+    border: 1px solid var(--line); color: var(--muted);
+  }
+  .badge.primary {
+    background: linear-gradient(120deg, var(--indigo), #6b6ee0);
+    color: #0b0c16; border: none;
+  }
+  .phone {
+    justify-self: center; position: relative;
+  }
+  .phone img {
+    width: 280px; border-radius: 36px; border: 6px solid #21244a;
+    box-shadow: 0 0 80px rgba(140, 143, 248, 0.25), 0 24px 60px rgba(0,0,0,.6);
+    display: block;
+  }
+
+  section { padding: 72px 0; border-top: 1px solid var(--line); }
+  h2 { font-size: 34px; letter-spacing: -0.01em; margin-bottom: 8px; }
+  .sub { color: var(--muted); margin-bottom: 40px; max-width: 640px; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+  .card {
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: 16px; padding: 24px;
+  }
+  .card .emoji { font-size: 26px; }
+  .card h3 { font-size: 17px; margin: 12px 0 6px; }
+  .card p { font-size: 14.5px; color: var(--muted); }
+  .card.accent { border-color: rgba(140,143,248,.45); }
+
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .step .num {
+    width: 36px; height: 36px; border-radius: 50%; display: flex;
+    align-items: center; justify-content: center; font-weight: 700;
+    background: var(--indigo); color: #0b0c16; margin-bottom: 16px;
+  }
+
+  .privacy {
+    background: linear-gradient(120deg, rgba(140,143,248,.12), rgba(95,212,200,.08));
+    border: 1px solid rgba(140,143,248,.35); border-radius: 20px;
+    padding: 40px; text-align: center;
+  }
+  .privacy h2 { margin-bottom: 12px; }
+  .privacy p { color: var(--muted); max-width: 560px; margin: 0 auto; }
+
+  details {
+    border: 1px solid var(--line); border-radius: 12px;
+    padding: 16px 20px; margin-bottom: 10px; background: var(--bg2);
+  }
+  summary { cursor: pointer; font-weight: 600; font-size: 15.5px; }
+  details p { margin-top: 10px; color: var(--muted); font-size: 14.5px; }
+
+  footer {
+    border-top: 1px solid var(--line); padding: 32px 0 48px;
+    color: var(--muted); font-size: 13.5px; text-align: center;
+  }
+
+  @media (max-width: 800px) {
+    .hero { grid-template-columns: 1fr; padding: 32px 0 48px; text-align: center; }
+    .hero p.lead { margin-left: auto; margin-right: auto; }
+    .badges { justify-content: center; }
+    .hero h1 { font-size: 40px; }
+    .steps { grid-template-columns: 1fr; }
+    nav { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="brand"><img src="assets/icon.png" alt="Norzy icon">Norzy</div>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <div>
+      <h1>Know your night.</h1>
+      <p class="lead">
+        Norzy listens while you sleep — real machine-learning snore detection,
+        full-night audio you can replay second by second, and a morning report
+        that shows what actually helps.
+      </p>
+      <div class="badges">
+        <span class="badge primary">Coming soon to the App&nbsp;Store</span>
+        <span class="badge"> Built for iPhone</span>
+        <span class="badge">100% on-device</span>
+      </div>
+    </div>
+    <div class="phone"><img src="assets/screenshot.png" alt="Norzy app screenshot"></div>
+  </div>
+
+  <section id="features">
+    <h2>Not just a decibel meter</h2>
+    <p class="sub">
+      Most snore apps trigger on anything loud. Norzy runs Apple's on-device
+      sound classifier — a trained ML model with a dedicated snoring class —
+      and layers its own filtering on top.
+    </p>
+    <div class="grid">
+      <div class="card accent">
+        <div class="emoji">🧠</div>
+        <h3>Real ML detection</h3>
+        <p>A trained sound classifier recognizes snoring itself — validated against real recordings: zero false positives on dogs, vacuum cleaners, rain, coughing and laughter.</p>
+      </div>
+      <div class="card">
+        <div class="emoji">🎧</div>
+        <h3>The whole night, replayable</h3>
+        <p>Continuous recording in 5-minute chunks. Tap any point of the night timeline and hear exactly what happened.</p>
+      </div>
+      <div class="card">
+        <div class="emoji">🌬️</div>
+        <h3>Noise-floor immunity</h3>
+        <p>An adaptive room-noise gate ignores fans, white noise and the TV — the false positives that plague other trackers.</p>
+      </div>
+      <div class="card accent">
+        <div class="emoji">🫁</div>
+        <h3>Breathing-pause flags</h3>
+        <p>Long silences ending in a sharp snort are flagged with a pauses-per-hour count. Not a diagnosis — a reason to see a doctor early.</p>
+      </div>
+      <div class="card">
+        <div class="emoji">📊</div>
+        <h3>Morning report</h3>
+        <p>Snore Score, minutes and % of the night, loudness bands, hour-by-hour breakdown, every episode listed and playable.</p>
+      </div>
+      <div class="card">
+        <div class="emoji">🧪</div>
+        <h3>What actually helps</h3>
+        <p>Tag nights with factors — alcohol, nasal strip, mouth tape, sleeping position — and see their measured effect on your score over time.</p>
+      </div>
+      <div class="card">
+        <div class="emoji">💬</div>
+        <h3>Sleep talking</h3>
+        <p>Said something at 3 AM? It's a separate category in the report, with playback.</p>
+      </div>
+      <div class="card">
+        <div class="emoji">❤️</div>
+        <h3>Apple Health</h3>
+        <p>Nights sync to Health; sleep stages from your Apple Watch overlay the snore timeline — see if you snore in deep sleep.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <h2>How it works</h2>
+    <p class="sub">No wearables, no calibration, no account.</p>
+    <div class="steps">
+      <div class="card step">
+        <div class="num">1</div>
+        <h3>Start the night</h3>
+        <p>Put the phone within a couple of meters of your pillow, plug it in, tap Start. Lock the screen — recording continues.</p>
+      </div>
+      <div class="card step">
+        <div class="num">2</div>
+        <h3>Sleep</h3>
+        <p>Norzy records and classifies sound in real time, entirely on the device. Calls and alarms are handled gracefully.</p>
+      </div>
+      <div class="card step">
+        <div class="num">3</div>
+        <h3>Read the morning report</h3>
+        <p>Score, episodes, charts, breathing pauses — and the exact audio behind every number, one tap away.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="privacy">
+      <h2>🔒 Your snoring is nobody's business</h2>
+      <p>
+        Everything — recording, ML analysis, reports — happens on your iPhone.
+        Audio never leaves the device. No account, no cloud, no analytics.
+        Old audio auto-deletes after a configurable number of nights.
+      </p>
+    </div>
+  </section>
+
+  <section id="faq">
+    <h2>FAQ</h2>
+    <details>
+      <summary>Is this a medical device?</summary>
+      <p>No. Norzy is an awareness tool. Breathing-pause flags and scores are informational; if your reports look concerning, take them to a doctor — a few weeks of exported data is a great starting point for a sleep-study conversation.</p>
+    </details>
+    <details>
+      <summary>Does it drain the battery?</summary>
+      <p>Overnight recording with ML analysis uses real energy — keep the phone plugged in, like every overnight sleep tracker.</p>
+    </details>
+    <details>
+      <summary>How much storage does a night take?</summary>
+      <p>About 115 MB per 8 hours (compressed AAC). Reports are kept forever; audio is pruned automatically after N nights — your call.</p>
+    </details>
+    <details>
+      <summary>What about my partner's snoring? The dog?</summary>
+      <p>Dogs, fans, rain and traffic don't fool the classifier. A snoring partner next to you will be picked up though — snoring is snoring. Per-person separation is on the roadmap.</p>
+    </details>
+  </section>
+
+  <footer>
+    © 2026 Norzy · Not a medical device · Made with 🌙 for better mornings
+  </footer>
+
+</div>
+</body>
+</html>
