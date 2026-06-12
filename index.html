@@ -65,18 +65,18 @@
   .hero h1 { font-size: 60px; line-height: 1.06; }
   .hero h1 em { font-style: italic; color: var(--lavender); }
   .hero p.lead { margin: 26px 0 34px; font-size: 18.5px; color: var(--muted); max-width: 470px; }
-  .badges { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
-  .badge {
+  .cta {
     display: inline-flex; align-items: center;
-    padding: 9px 16px; border-radius: 999px; font-size: 13.5px; font-weight: 500;
-    border: 1px solid var(--card-line); color: var(--muted);
-    background: var(--card); white-space: nowrap;
-  }
-  .badge.primary {
+    padding: 13px 26px; border-radius: 999px; font-size: 15px; font-weight: 600;
     background: linear-gradient(120deg, var(--lavender), #8a87e8);
-    color: #16132b; border: none; font-weight: 600;
-    box-shadow: 0 6px 28px rgba(168, 165, 243, 0.28);
+    color: #16132b; white-space: nowrap;
+    box-shadow: 0 6px 28px rgba(168, 165, 243, 0.25);
   }
+  .hero-meta {
+    margin-top: 18px; font-size: 13.5px; color: var(--muted);
+    display: flex; gap: 8px; align-items: center; white-space: nowrap;
+  }
+  .hero-meta span.dot { opacity: .45; }
   .phone { justify-self: center; }
   .phone img {
     width: 290px; border-radius: 40px;
@@ -92,23 +92,29 @@
   h2 { font-size: 38px; margin-bottom: 10px; }
   .sub { color: var(--muted); margin-bottom: 44px; max-width: 620px; font-size: 16.5px; }
 
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
   .card {
     background: var(--card);
-    border: 1px solid var(--card-line);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
     border-radius: var(--r);
-    padding: 28px;
+    padding: 26px 24px;
     backdrop-filter: blur(8px);
     transition: border-color .25s, transform .25s;
   }
-  .card:hover { border-color: rgba(255,255,255,.11); transform: translateY(-2px); }
-  .card .emoji { font-size: 26px; }
-  .card h3 { font-size: 16.5px; margin: 14px 0 6px; font-weight: 600; }
-  .card p { font-size: 14.5px; color: var(--muted); }
+  .card:hover { border-color: rgba(255,255,255,.09); transform: translateY(-2px); }
+  .card h3 { font-size: 16px; margin: 16px 0 6px; font-weight: 600; }
+  .card p { font-size: 14px; color: var(--muted); }
   .card.accent {
-    background: linear-gradient(160deg, rgba(168,165,243,.10), rgba(238,148,169,.05) 60%, var(--card));
-    border-color: rgba(168, 165, 243, 0.22);
+    background: linear-gradient(170deg, rgba(168,165,243,.09), var(--card) 65%);
   }
+  .icon {
+    width: 42px; height: 42px; border-radius: 13px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(168, 165, 243, 0.10); color: var(--lavender);
+  }
+  .icon svg { width: 21px; height: 21px; stroke: currentColor; fill: none;
+    stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 
   .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
   .step .num {
@@ -141,13 +147,20 @@
 
   footer { border-top: 1px solid rgba(255,255,255,.045); padding: 36px 0 52px; color: var(--muted); font-size: 13.5px; text-align: center; }
 
+  @media (max-width: 1010px) {
+    .grid { grid-template-columns: repeat(2, 1fr); }
+  }
   @media (max-width: 820px) {
     .hero { grid-template-columns: 1fr; padding: 36px 0 56px; text-align: center; }
     .hero h1 { font-size: 42px; }
     .hero p.lead { margin-left: auto; margin-right: auto; }
-    .badges { justify-content: center; }
+    .hero-meta { justify-content: center; }
+    .grid { grid-template-columns: repeat(2, 1fr); }
     .steps { grid-template-columns: 1fr; }
     nav { display: none; }
+  }
+  @media (max-width: 560px) {
+    .grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -172,10 +185,13 @@
         full-night audio you can replay second by second, and a morning report
         that shows what actually helps.
       </p>
-      <div class="badges">
-        <span class="badge primary">Coming soon to the App Store</span>
-        <span class="badge">Built for iPhone</span>
-        <span class="badge">100% on-device</span>
+      <div>
+        <span class="cta">Coming soon to the App Store</span>
+        <div class="hero-meta">
+          <span>Built for iPhone</span><span class="dot">·</span>
+          <span>100% on-device</span><span class="dot">·</span>
+          <span>No account</span>
+        </div>
       </div>
     </div>
     <div class="phone"><img src="assets/screenshot.png" alt="Norzy app screenshot"></div>
@@ -190,42 +206,42 @@
     </p>
     <div class="grid">
       <div class="card accent">
-        <div class="emoji">🧠</div>
+        <div class="icon"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><rect x="9.2" y="9.2" width="5.6" height="5.6" rx="1"/><path d="M9 1.5v2.5M15 1.5v2.5M9 20v2.5M15 20v2.5M1.5 9H4M1.5 15H4M20 9h2.5M20 15h2.5"/></svg></div>
         <h3>Real ML detection</h3>
         <p>A trained sound classifier recognizes snoring itself — validated against real recordings: zero false positives on dogs, vacuum cleaners, rain, coughing and laughter.</p>
       </div>
       <div class="card">
-        <div class="emoji">🎧</div>
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3v5zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3v5z"/></svg></div>
         <h3>The whole night, replayable</h3>
         <p>Continuous recording in 5-minute chunks. Tap any point of the night timeline and hear exactly what happened.</p>
       </div>
       <div class="card">
-        <div class="emoji">🌬️</div>
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M9.59 4.59A2 2 0 1 1 11 8H2"/><path d="M12.59 19.41A2 2 0 1 0 14 16H2"/><path d="M17.73 7.73A2.5 2.5 0 1 1 19.5 12H2"/></svg></div>
         <h3>Noise-floor immunity</h3>
         <p>An adaptive room-noise gate ignores fans, white noise and the TV — the false positives that plague other trackers.</p>
       </div>
       <div class="card accent">
-        <div class="emoji">🫁</div>
+        <div class="icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
         <h3>Breathing-pause flags</h3>
         <p>Long silences ending in a sharp snort are flagged with a pauses-per-hour count. Not a diagnosis — a reason to see a doctor early.</p>
       </div>
       <div class="card">
-        <div class="emoji">📊</div>
+        <div class="icon"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
         <h3>Morning report</h3>
         <p>Snore Score, minutes and % of the night, loudness bands, hour-by-hour breakdown, every episode listed and playable.</p>
       </div>
       <div class="card">
-        <div class="emoji">🧪</div>
+        <div class="icon"><svg viewBox="0 0 24 24"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg></div>
         <h3>What actually helps</h3>
         <p>Tag nights with factors — alcohol, nasal strip, mouth tape, sleeping position — and see their measured effect on your score over time.</p>
       </div>
       <div class="card">
-        <div class="emoji">💬</div>
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
         <h3>Sleep talking</h3>
         <p>Said something at 3 AM? It's a separate category in the report, with playback.</p>
       </div>
       <div class="card">
-        <div class="emoji">❤️</div>
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
         <h3>Apple Health</h3>
         <p>Nights sync to Health; sleep stages from your Apple Watch overlay the snore timeline — see if you snore in deep sleep.</p>
       </div>
